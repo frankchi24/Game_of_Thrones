@@ -56,9 +56,9 @@ class chracters(object):
         elif self.name == "Daenerys Targaryen":
             self.string = {   
                 'name':'Daenerys Targaryen',
-                'chracter_description':'I am Daenerys Stormborn, of House Targaryen. Rightful heir to the Iron Throne,\
+                'chracter_description':'''I am Daenerys Stormborn, of House Targaryen. Rightful heir to the Iron Throne,\
 Queen of the Seven Kingdoms of Westeros, the Rhoynar, and the First Men.I am the Mother of Dragons, \
-the Khaleesi of the Great Grass Sea, the Unburnt, and Breaker of Chains.',
+the Khaleesi of the Great Grass Sea, the Unburnt, and Breaker of Chains.''',
                 'health_hits':80,
                 'mana_points':120,
             }
