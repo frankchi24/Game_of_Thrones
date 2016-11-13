@@ -117,13 +117,38 @@ the Khaleesi of the Great Grass Sea, the Unburnt, and Breaker of Chains.",
             'description':'%s roars and a dragon swoops in and breathes fire on %s'
             }    
         )
+Tyrian_Lannister = chracter(
+        "Tyrian Lannister",
+        False,
+        "I am Tyrian Lannister, the smartest man in Westero.",
+        90,
+        130,
+        attack_1 = {
+            'name':'Crossboat',
+            'hurt':15,
+            'mana_consum':0,
+            'description':'%s takes out a crossboat and shoot %s',
+            },
+        attack_2 = {
+            'name':'Poison',
+            'hurt':30,
+            'mana_consum':20,
+            'description':'%s asks %s to drink with him, and ...',
+            },
+        attack_3 = {
+            'name':'Wild Fire',
+            'hurt':40,
+            'mana_consum':90,
+            'description':'%s takes out a bottle of green fire and pours it on %s',
+            }    
+        )
 # Game Start Here
 print "Welcome to Westeros!"
 raw_input() 
 # Pick chracter
 print "May I ask your name, my Lord?"
-chracters = [Jon_Snow,The_Red_Woman,Daenerys_Targaryen]
-chracter_player_chose  = int(raw_input("Pick a chracter:\n1. Jon Snow\n2. The Red Woman\n3. Daenerys Targaryen\n>  "))-1
+chracters = [Jon_Snow,The_Red_Woman,Daenerys_Targaryen,Tyrian_Lannister]
+chracter_player_chose  = int(raw_input("Pick a chracter:\n1. Jon Snow\n2. The Red Woman\n3. Daenerys Targaryen\n4. Tyrian Lannister\n>  "))-1
 
 player = chracters[chracter_player_chose]
 chracters.pop(chracter_player_chose)
@@ -140,9 +165,9 @@ while player.health > 0 and target.health > 0:
     player.attack(target)
     raw_input() 
 if player.health <= 0:
-    "You have killed %s" %(target.name)
+    print "You have killed %s" %(target.name)
 else:
-    "You have been killed by %s" %(target.name)
+    print "You have been killed by %s" %(target.name)
 
 print "Game Over"
 
