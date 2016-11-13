@@ -2,25 +2,46 @@ import random
 
 class chracter(object):
 
-    def __init__(self, name, player, chracter_description, health, mana, attack):
+    def __init__(self, name, player, chracter_description, health, mana, attack_1,attack_2,attack_3):
         self.name = name
         self.player = player
         self.chracter_description = chracter_description
         self.health = health
         self.mana = mana
-        self.attack = attack
+        self.attack_1 = attack_1
+        self.attack_2 = attack_2
+        self.attack_3 = attack_3
 
     def description(self):
         print self.chracter_description
 
-    def attack(self,target,attack):
+    def attack(self,target):
+        # player pick move
+        number_chose = int(raw_input(
+            "Pick an attack:\n1.%s \n2.%s \n3.%s \n>  "%(
+                self.attack_1['name'],
+                self.attack_2['name'],
+                self.attack_3['name']
+            )))-1
+        moves = [self.attack_1,self.attack_2,self.attack_3]
+        attack = moves[number_chose]
 
-        self.mana = self.mana - self.attack_chose["mana_consum"]
-        target.health = target.health - self.attack_chose["hurt"]
-        
-        print self.attack["description"] %(self.name, target.name)        
-        print "%s has %d health left"%(target.name, target.health)
-        print "%s has %d mana left" %(self.name, self.mana)
+        #player attack calculate
+        self.mana = self.mana - attack["mana_consum"]
+        target.health = target.health - attack["hurt"]
+        print attack["description"] % (self.name, target.name)        
+        print "%s has %d health left" % (target.name, target.health)
+        print "%s has %d mana left" % (self.name, self.mana)
+
+        raw_input()
+        #computer random pick moves
+        attack_back = random.choice([target.attack_1,target.attack_2,target.attack_3])
+    
+        target.mana = target.mana - attack_back["mana_consum"]
+        self.health = self.health - attack_back["hurt"]
+        print attack_back['description'] % (target.name, self.name)
+        print "%s has %d health left" % (self.name, self.health)
+        print "%s has %d mana left" % (target.name, target.mana)
 
 
 Jon_Snow = chracter(
@@ -110,9 +131,7 @@ raw_input()
 print "Your target is %s\nhealth: %d\nmana:%d " %(target.name,target.health,target.mana)
 target.description()
 
-Jon_Snow.attack(The_Red_Woman,attack)
-The_Red_Woman.attack(Jon_Snow,attack)
-
+Jon_Snow.attack(The_Red_Woman)
 
 # # pick target
 # while Jon_Snow.health and The_Red_Woman.health > 0: 
