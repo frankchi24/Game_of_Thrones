@@ -15,50 +15,39 @@ class chracter(object):
     def description(self):
         print self.chracter_description
 
-    def attack(self,target):
-        # player pick moves
-        number_chose = int(raw_input(
-            "Pick an attack:\n1.%s \n2.%s \n3.%s \n>  "%(
-                self.attack_1['name'],
-                self.attack_2['name'],
-                self.attack_3['name']
-            )))-1
-        moves = [self.attack_1,self.attack_2,self.attack_3]
-        attack = moves[number_chose]
+    def attack(self,target,player_attack):
+        if player_attack == True:
+            # player pick moves
+            while True:
+                number_chose = int(raw_input(
+                    "Pick an attack:\n1.%s \n2.%s \n3.%s \n>  "%(
+                        self.attack_1['name'],
+                        self.attack_2['name'],
+                        self.attack_3['name']
+                    )))-1
+                moves = [self.attack_1,self.attack_2,self.attack_3]
+                attack = moves[number_chose]
+                # mana calculate
+                if self.mana - attack['mana_consum'] >= 0:
+                    break
+                else:
+                    print "no mana"
+            #player attack calculate
+            self.mana = self.mana - attack['mana_consum']
+            target.health = target.health - attack["hurt"]
+        else:
+            # computer random pick moves
+            attack = random.choice([self.attack_1, self.attack_2, self.attack_3])
 
-        #mana calculate
-        while self.mana - attack['mana_consum'] < 0:
-            print "no mana"
-            number_chose = int(raw_input(
-            "Pick an attack:\n1.%s \n2.%s \n3.%s \n>  "%(
-                self.attack_1['name'],
-                self.attack_2['name'],
-                self.attack_3['name']
-            )))-1
-            moves = [self.attack_1,self.attack_2,self.attack_3]
-            attack = moves[number_chose]
+            # mana calculate
+            while self.mana - attack["mana_consum"] < 0:
+                attack = random.choice([self.attack_1, self.attack_2, self.attack_3])
 
-        #player attack calculate
-        self.mana = self.mana - attack['mana_consum']
-        target.health = target.health - attack["hurt"]
+            # computer attack calcualate
+            self.mana = self.mana - attack["mana_consum"]
+            target.health = target.health - attack["hurt"]
 
         print attack["description"] % (self.name, target.name)        
-        print "%s has %d health left" % (target.name, target.health)
-        print "%s has %d mana left" % (target.name, target.mana)
-
-    def attack_back(self,target):
-        #computer random pick moves
-        attack_back = random.choice([self.attack_1,self.attack_2,self.attack_3])
-        
-        #mana calculate
-        while self.mana - attack_back["mana_consum"] < 0:
-            attack_back = random.choice([self.attack_1,self.attack_2,self.attack_3])
-        
-        #computer attack calcualate
-        self.mana = self.mana - attack_back["mana_consum"]
-        target.health = target.health - attack_back["hurt"]
-
-        print attack_back['description'] % (self.name, target.name)
         print "%s has %d health left" % (target.name, target.health)
         print "%s has %d mana left" % (target.name, target.mana)
 
@@ -185,7 +174,7 @@ raw_input()
 
 
 while player.health > 0 and target.health > 0:
-    player.attack(target)
+    player.attack(target,True)
 
     if player.health <= 0:
         print "You have been killed by %s"%(target.name)
@@ -195,8 +184,8 @@ while player.health > 0 and target.health > 0:
         print "You have killed %s"%(target.name)
         break
 
-    raw_input()     
-    target.attack_back(player)
+    raw_input()
+    target.attack(player,False)
     raw_input() 
 
 
