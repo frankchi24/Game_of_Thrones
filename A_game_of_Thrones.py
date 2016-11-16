@@ -37,11 +37,13 @@ class chracter(object):
             target.health = target.health - attack["hurt"]
         else:
             # computer random pick moves
-            attack = random.choice([self.attack_1, self.attack_2, self.attack_3])
-
-            # mana calculate
-            while self.mana - attack["mana_consum"] < 0:
+            while True:
                 attack = random.choice([self.attack_1, self.attack_2, self.attack_3])
+                # mana calculate
+                if self.mana - attack["mana_consum"] >= 0:
+                    break
+                else:
+                    print "No mana"
 
             # computer attack calcualate
             self.mana = self.mana - attack["mana_consum"]
@@ -50,7 +52,6 @@ class chracter(object):
         print attack["description"] % (self.name, target.name)        
         print "%s has %d health left" % (target.name, target.health)
         print "%s has %d mana left" % (target.name, target.mana)
-
 
 
 
@@ -176,17 +177,15 @@ raw_input()
 while player.health > 0 and target.health > 0:
     player.attack(target,True)
 
-    if player.health <= 0:
-        print "You have been killed by %s"%(target.name)
-        break
-    
-    elif target.health <= 0 :
+    if target.health <= 0:
         print "You have killed %s"%(target.name)
         break
-
     raw_input()
     target.attack(player,False)
     raw_input() 
+    if player.health <= 0:
+        print "You have been killed by %s"%(target.name)
+        break    
 
 
 print "Game Over"
