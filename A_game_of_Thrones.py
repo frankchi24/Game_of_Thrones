@@ -1,4 +1,8 @@
 import random
+## to do
+# put all chracters in database and querry with scripts
+# don't hard code 
+
 
 class chracter(object):
 
@@ -18,20 +22,25 @@ class chracter(object):
     def attack(self,target,player_attack):
         if player_attack == True:
             # player pick moves
+            moves = [self.attack_1,self.attack_2,self.attack_3]
             while True:
-                number_chose = int(raw_input(
-                    "Pick an attack:\n1.%s \n2.%s \n3.%s \n>  "%(
-                        self.attack_1['name'],
-                        self.attack_2['name'],
-                        self.attack_3['name']
-                    )))-1
-                moves = [self.attack_1,self.attack_2,self.attack_3]
-                attack = moves[number_chose]
-                # mana calculate
-                if self.mana - attack['mana_consum'] >= 0:
-                    break
-                else:
-                    print "no mana"
+                try:
+                    number_chose = int(raw_input(
+                        "Pick an attack:\n1.%s \n2.%s \n3.%s \n>  "%(
+                            self.attack_1['name'],
+                            self.attack_2['name'],
+                            self.attack_3['name']
+                        )))-1
+                    
+                    attack = moves[number_chose]
+                    # mana calculate
+                    if self.mana - attack['mana_consum'] >= 0:
+                        break
+                    else:
+                        print "No mana"
+                except ValueError:
+                    pass
+            
             #player attack calculate
             self.mana = self.mana - attack['mana_consum']
             target.health = target.health - attack["hurt"]
@@ -159,7 +168,12 @@ raw_input()
 # Pick chracter
 print "May I ask your name, my Lord?"
 chracters = [Jon_Snow,The_Red_Woman,Daenerys_Targaryen,Tyrian_Lannister]
-chracter_player_chose  = int(raw_input("Pick a chracter:\n1. Jon Snow\n2. The Red Woman\n3. Daenerys Targaryen\n4. Tyrian Lannister\n>  "))-1
+while True:
+    try:
+        chracter_player_chose  = int(raw_input("Pick a chracter:\n1. Jon Snow\n2. The Red Woman\n3. Daenerys Targaryen\n4. Tyrian Lannister\n>  "))-1
+        break
+    except:
+        pass
 
 player = chracters[chracter_player_chose]
 chracters.pop(chracter_player_chose)
